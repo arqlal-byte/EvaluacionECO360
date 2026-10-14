@@ -1,0 +1,1 @@
+Prueba PWA aislada. No contiene datos ni llamadas a Persona ECO. Prueba de Apps Script pendiente. No modificar archivos operativos.

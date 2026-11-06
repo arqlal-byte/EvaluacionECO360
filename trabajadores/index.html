@@ -1,0 +1,324 @@
+<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#173b59"><meta name="apple-mobile-web-app-title" content="Evaluación ECO"><link rel="apple-touch-icon" href="../assets/apple-touch-icon.png"><link rel="manifest" href="./manifest.webmanifest"><title>Evaluación de Líderes ECO — Móvil</title><style>*{box-sizing:border-box}html{min-height:100%;-webkit-text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;margin:0;background:#f2f5f8;color:#183146;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+.brand{background:#fff;border-bottom:1px solid #dce5ee;padding:calc(13px + env(safe-area-inset-top)) 14px 12px;text-align:center}
+.brand img{max-width:100%;max-height:72px;width:auto;height:auto;object-fit:contain;display:block;margin:0 auto 8px}
+.header-title{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px}
+h1{font-size:18px;margin:0;color:#113451}
+.tag{font-size:9px;font-weight:800;background:#fff1db;color:#815313;border:1px solid #f1d298;border-radius:999px;padding:4px 7px}
+.main-view[hidden],.eco360-worker-card[hidden],#worker-selected[hidden],#worker-results[hidden]{display:none!important}
+.footer{font-size:11px;color:#708298;padding:0 16px 20px;text-align:center}
+/* Portal independiente para trabajadores, optimizado para pantalla móvil. */
+.eco360-worker-view{max-width:590px;margin:0 auto;padding:18px 13px 35px}
+.eco360-worker-card{background:#fff;border:1px solid #d8e1ec;border-radius:15px;padding:20px;box-shadow:0 6px 22px #0e29460b}
+.eco360-worker-card h2{margin:0 0 9px;font-size:22px;line-height:1.2;color:#0d2b4d}
+.eco360-worker-lead{font-size:13px;color:#60748a;line-height:1.5;margin:0 0 18px}
+.eco360-worker-field{margin:16px 0}
+.eco360-worker-field label{display:block;font-weight:800;font-size:13px;color:#123a5a;margin-bottom:7px}
+.eco360-worker-input{display:block;width:100%;border:1px solid #abbcd0;border-radius:10px;background:white;padding:12px 13px;font:inherit;font-size:16px;color:#172c43;min-height:46px}
+.eco360-worker-input:focus-visible{outline:3px solid #98c4ef;outline-offset:1px}
+.eco360-worker-hint{margin:6px 0 0;font-size:11px;color:#64778c;line-height:1.4}
+.eco360-worker-results{border:1px solid #cedbe8;border-radius:10px;overflow:auto;max-height:255px;margin-top:6px;background:#fff}
+.eco360-worker-result{border:0;border-bottom:1px solid #e8edf3;padding:12px;width:100%;display:block;background:#fff;color:#182f4a;text-align:left;cursor:pointer;font:inherit}
+.eco360-worker-result:hover,.eco360-worker-result:focus-visible{background:#e9f3fd}
+.eco360-worker-result strong{display:block;font-size:12px;color:#8e0c2c;line-height:1.25}
+.eco360-worker-result small{display:block;color:#64758a;font-size:11px;line-height:1.3;margin-top:4px}
+.eco360-worker-selected{background:#edf5fe;border:1px solid #bdd4ed;padding:13px;border-radius:11px;margin-top:8px}
+.eco360-worker-selected strong{display:block;color:#0e3152;font-size:15px}
+.eco360-worker-selected span{display:block;font-size:12px;color:#4d6177;line-height:1.4;margin-top:4px}
+.eco360-worker-private{display:flex;gap:10px;align-items:flex-start;border:1px solid #d7e2ed;background:#f4f8fc;border-radius:11px;padding:12px;margin:16px 0;font-size:12px;line-height:1.45;color:#415b76}
+.eco360-worker-private b{color:#183858}
+.eco360-worker-private-icon{font-size:21px;line-height:1;flex:0 0 auto}
+.eco360-worker-button{border:1px solid #0d3156;border-radius:10px;background:#0b2c51;color:white;min-height:48px;padding:11px 16px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
+.eco360-worker-button:disabled{opacity:.5;cursor:not-allowed}
+.eco360-worker-button.outline{border-color:#b7c7d9;background:#fff;color:#244568}
+.eco360-worker-button.primary-wide{width:100%}
+.eco360-worker-feedback{min-height:17px;font-size:12px;line-height:1.45;color:#66788c;margin:9px 1px}
+.eco360-worker-feedback.error{color:#a41a31}
+.eco360-worker-feedback.good{color:#207152}
+.eco360-worker-count{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#4d6580;font-size:12px;font-weight:750;margin-bottom:8px}
+.eco360-worker-progress{height:9px;border-radius:999px;overflow:hidden;background:#dde5ef;margin:0 0 18px}
+.eco360-worker-progress>div{height:100%;width:0;background:#0a416b;transition:width .2s}
+.eco360-worker-person{font-size:12px;background:#f1f6fb;border:1px solid #dae5f0;border-radius:9px;padding:10px;margin:0 0 17px;color:#395775}
+.eco360-worker-person b{display:block;color:#103656;font-size:13px;margin-bottom:3px}
+/* Jerarquía visual reforzada para los 20 comportamientos del portal móvil. */
+.eco360-worker-taxonomy{background:linear-gradient(135deg,#eef5fc,#f8fbff);border:1px solid #cadaec;border-left:5px solid #0d355a;border-radius:12px;padding:13px 14px 14px;margin-bottom:16px}
+.eco360-worker-taxonomy small{display:block;font-size:11px;font-weight:800;color:#8b1531;letter-spacing:.4px;margin-bottom:9px}
+.eco360-worker-taxonomy strong{display:block;font-size:20px;color:#0b2c51;line-height:1.22;font-weight:850;letter-spacing:-.25px;margin-bottom:9px;overflow-wrap:anywhere}
+#worker-comportamiento.eco360-worker-hint{display:block;margin:0;font-size:16px;line-height:1.4;font-weight:700;color:#274c6b;overflow-wrap:anywhere}
+@media(max-width:420px){.eco360-worker-taxonomy{padding:12px 11px 13px;margin-bottom:13px}.eco360-worker-taxonomy strong{font-size:18px}#worker-comportamiento.eco360-worker-hint{font-size:15px}}
+.eco360-worker-question{font-size:17px;font-weight:800;color:#122a43;line-height:1.4;margin:0 0 16px}
+.eco360-worker-scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:13px 0 18px}
+.eco360-worker-rating{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:74px;border:1px solid #bfccdb;border-radius:9px;background:linear-gradient(#fff,#f6f9fd);cursor:pointer;padding:6px 3px;text-align:center;gap:4px}
+.eco360-worker-rating input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.eco360-worker-rating b{display:block;color:#203b58;font-size:20px}
+.eco360-worker-rating span{display:block;color:#67788a;font-size:9px;line-height:1.2;max-width:100%;overflow-wrap:anywhere;word-break:break-word}
+.eco360-worker-rating:has(input:checked){border-color:#0c416d;background:#0d355a;box-shadow:0 0 0 2px #a4c8e8}
+.eco360-worker-rating:has(input:checked) b,.eco360-worker-rating:has(input:checked) span{color:#fff}
+.eco360-worker-rating:has(input:focus-visible){outline:3px solid #84b9eb;outline-offset:2px}
+.eco360-worker-actions{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:5px}
+.eco360-worker-actions button{flex:1;min-width:0}
+.eco360-worker-done{padding:14px 0 2px;text-align:center}
+.eco360-worker-done .check{font-size:43px;color:#237150}
+.eco360-worker-done h2{margin:8px 0;color:#103c5d}
+.eco360-worker-done p{font-size:13px;line-height:1.5;color:#4c657b}
+@media(max-width:420px){.eco360-worker-view{padding:13px 9px 30px}.eco360-worker-card{padding:16px 13px}.eco360-worker-card h2{font-size:20px}.eco360-worker-rating{min-height:69px}.eco360-worker-rating span{font-size:8.6px}.eco360-worker-question{font-size:16px}}
+
+/* Solo el cuestionario móvil de trabajadores: tres conductas del mismo comportamiento por pantalla. */
+.eco360-worker-questions{display:grid;gap:0;margin:0 0 8px}
+.eco360-worker-conducta{padding:11px 0 15px;border-bottom:1px solid #e2e9f1}
+.eco360-worker-conducta:last-child{border-bottom:0;padding-bottom:5px}
+.eco360-worker-conducta-label{font-size:11px;font-weight:800;color:#8c1530;margin:0 0 7px}
+.eco360-worker-conducta .eco360-worker-question{font-size:15px;line-height:1.35;margin:0 0 9px}
+.eco360-worker-conducta .eco360-worker-scale{margin:0;gap:5px}
+.eco360-worker-conducta .eco360-worker-rating{min-height:61px}
+.eco360-worker-conducta .eco360-worker-rating b{font-size:18px}
+@media(max-width:420px){.eco360-worker-conducta{padding:10px 0 13px}.eco360-worker-conducta .eco360-worker-question{font-size:14px}.eco360-worker-conducta .eco360-worker-rating{min-height:58px}}
+
+
+</style></head><body><header class="brand"><img src="../assets/eco-cocacola-oficial.png" alt="Logotipos oficiales de Embotelladora de Colima" width="520" height="130"><div class="header-title"><h1>Evaluación de Líderes ECO</h1><span class="tag">MÓVIL · PROTOTIPO</span></div></header><main>  <!-- Acceso independiente para trabajadores: enlace ?page=trabajadores. -->
+  <section id="view-trabajadores" class="eco360-worker-view main-view">
+    <div id="worker-intro" class="eco360-worker-card">
+      <h2>Selecciona al líder</h2>
+      <p class="eco360-worker-lead">Prueba la experiencia móvil con líderes y preguntas ficticias. No se registran evaluaciones reales.</p>
+      <div class="eco360-worker-field">
+        <label for="worker-nomina">Tu número de nómina</label>
+        <input id="worker-nomina" class="eco360-worker-input" type="text" inputmode="numeric" pattern="[0-9]{1,12}" maxlength="12" autocomplete="off" placeholder="Escribe tu nómina">
+        <div class="eco360-worker-hint">La nómina permite registrar tu participación y evitar evaluaciones duplicadas.</div>
+      </div>
+      <div class="eco360-worker-field">
+        <label for="worker-search">Líder al que deseas evaluar</label>
+        <input id="worker-search" class="eco360-worker-input" type="search" autocomplete="off" placeholder="Buscar por nombre o nómina" aria-controls="worker-results">
+        <div id="worker-results" class="eco360-worker-results" hidden></div>
+        <div id="worker-selected" class="eco360-worker-selected" hidden></div>
+        <div class="eco360-worker-hint">Confirma el nombre y puesto antes de comenzar.</div>
+      </div>
+      <div class="eco360-worker-private">
+        <span class="eco360-worker-private-icon" aria-hidden="true">🔒</span>
+        <div><b>Privacidad de tus respuestas.</b> Tus calificaciones se registran para uso interno de evaluación. El cuestionario es confidencial, pero no anónimo.</div>
+      </div>
+      <button type="button" id="worker-start" class="eco360-worker-button primary-wide" disabled>Comenzar evaluación</button>
+      <div id="worker-intro-status" class="eco360-worker-feedback" role="status" aria-live="polite"></div>
+    </div>
+    <div id="worker-questionnaire" class="eco360-worker-card" hidden>
+      <div class="eco360-worker-count"><span id="worker-number">Comportamiento 1 de 20</span><span id="worker-complete-count">0 / 60 contestadas</span></div>
+      <div class="eco360-worker-progress" role="progressbar" aria-label="Avance de la evaluación" aria-valuemin="0" aria-valuemax="60" aria-valuenow="0" id="worker-track"><div id="worker-progress-fill"></div></div>
+      <div class="eco360-worker-person"><b id="worker-leader-name"></b><span id="worker-leader-role"></span></div>
+      <div class="eco360-worker-taxonomy"><small id="worker-code">B01 · Conducta a evaluar</small><strong id="worker-competencia"></strong><div id="worker-comportamiento" class="eco360-worker-hint"></div></div>
+      <div id="worker-scale" class="eco360-worker-questions" aria-label="Tres conductas del comportamiento"></div>
+      <div class="eco360-worker-actions"><button id="worker-back" type="button" class="eco360-worker-button outline">Anterior</button><button id="worker-next" type="button" class="eco360-worker-button">Guardar y continuar</button></div>
+      <div id="worker-question-status" class="eco360-worker-feedback" role="status" aria-live="polite"></div>
+    </div>
+    <div id="worker-finished" class="eco360-worker-card" hidden>
+      <div class="eco360-worker-done"><div class="check" aria-hidden="true">✓</div><h2 id="worker-finished-title">Evaluación registrada</h2><p id="worker-finished-message"></p></div>
+      <button type="button" id="worker-new" class="eco360-worker-button primary-wide">Realizar otra evaluación</button>
+    </div>
+  </section>
+
+</main><p class="footer">Prototipo de Evaluación 360 ECO · Acceso móvil para trabajadores</p><script>const ecoPuente=(()=>{
+  "use strict";
+  /* Solo URL /exec de un proyecto Apps Script de PRUEBAS, independiente. */
+  const API_URL='https://script.google.com/macros/s/AKfycbyYfau3oEdwrb4eoPjep-LbJijamSxF78QTVdj9jiNhP0DeMRJWCwb5zkKhMhMz8H7I/exec';
+  const remoto=/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(API_URL);
+  let counter=0;
+  const pausa=ms=>new Promise(done=>setTimeout(done,ms));
+  function jsonp(accion,parametros={}){
+    return new Promise((resolve,reject)=>{
+      const cb="eco360cb_"+Date.now()+"_"+(++counter)+"_"+Math.floor(Math.random()*1000000);
+      const node=document.createElement("script");let done=false;
+      function finish(){if(done)return false;done=true;clearTimeout(timer);delete window[cb];node.remove();return true;}
+      window[cb]=r=>{if(!finish())return;r&&r.ok?resolve(r.data):reject(new Error(r&&r.error||"Respuesta del servicio inválida."));};
+      node.onerror=()=>{if(finish())reject(new Error("Servicio de Evaluación 360 no disponible. Revisa el despliegue."));};
+      const timer=setTimeout(()=>{if(finish())reject(new Error("Tiempo de espera agotado."));},15000);
+      node.referrerPolicy="no-referrer";
+      node.src=API_URL+"?"+new URLSearchParams({eco360Api:'1',accion,callback:cb,...parametros}).toString();
+      document.head.appendChild(node);
+    });
+  }
+  async function leer(action,arg){
+    if(action==="catalogo")return jsonp("catalogo");
+    if(action==="verificar")return enviar(arg,"verificar");
+    throw new Error("Operación no permitida para Trabajadores.");
+  }
+  async function enviar(p,accion="guardar"){
+    if(!window.crypto||typeof crypto.randomUUID!=="function")
+      throw new Error("Utiliza un navegador actualizado con conexión segura.");
+    const rid=crypto.randomUUID().replace(/-/g,"");
+    const body=new URLSearchParams({eco360Api:"1",accion,rid,payload:JSON.stringify(p)});
+    try{await fetch(API_URL,{method:"POST",mode:"no-cors",redirect:"follow",body,credentials:"omit",referrerPolicy:"no-referrer"});}catch(_){}
+    for(let n=0;n<18;n++){
+      try{
+        const status=await jsonp("resultado",{rid});
+        if(status&&!status.pendiente){
+          if(status.ok===true)return status;
+          const err=new Error(status.error||"Operación no confirmada.");
+          err.confirmadoPorServidor=true;throw err;
+        }
+      }catch(e){if(e.confirmadoPorServidor)throw e;}
+      await pausa(1500);
+    }
+    throw new Error("No se obtuvo confirmación del servidor. Conservamos tus respuestas para reintentar.");
+  }
+  return {leer,enviar,remoto};
+})();
+/* Evaluación de trabajadores. Independiente del editor y Configuración 360. */
+(function() {
+  'use strict';
+  let CICLO_APP='';
+  const get = id => document.getElementById(id);
+  const escala = ['Nunca','Rara vez','Algunas veces','Frecuentemente','Siempre'];
+  const s = { datos:null, lider:null, respuestas:Array(60).fill(null), indice:0, nomina:'', ocupado:false };
+  const html = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const norm = v => String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+  function msg(id, texto, error) { const n=get(id); n.textContent=texto||''; n.className='eco360-worker-feedback'+(error?' error':''); }
+  function api(method,arg,yes,no) {
+    const methods={obtenerFormularioTrabajadores360:"catalogo",verificarParticipacionTrabajador360:"verificar",guardarEvaluacionTrabajador360:"guardar"};
+    const action=methods[method];
+    if(!action){no(new Error("Método no disponible en Trabajadores."));return;}
+    (action==="guardar"?ecoPuente.enviar(arg):ecoPuente.leer(action,arg)).then(yes).catch(no);
+  }
+  function key() { return 'ECO360:trabajadores:'+CICLO_APP+':'+s.nomina+':'+(s.lider?s.lider.nomina:''); }
+  function saveDraft() { try { sessionStorage.setItem(key(),JSON.stringify(s.respuestas)); } catch(_){} }
+  function loadDraft() {
+    s.respuestas=Array(60).fill(null);
+    try {
+      const a=JSON.parse(sessionStorage.getItem(key())||'null');
+      if (Array.isArray(a)&&a.length===60) s.respuestas=a.map(v=>Number.isInteger(v)&&v>=1&&v<=5?v:null);
+    } catch(_){}
+  }
+  function clearDraft() { try { sessionStorage.removeItem(key()); } catch(_){} }
+  function setBusy(b) {
+    s.ocupado=b;
+    ['worker-nomina','worker-search','worker-start','worker-back','worker-next'].forEach(id=>get(id).disabled=b);
+    get('worker-results').querySelectorAll('button').forEach(boton=>{boton.disabled=b;});
+    get('worker-scale').querySelectorAll('input').forEach(inp=>{inp.disabled=b;});
+    if (!b) refreshStart();
+  }
+  function refreshStart() {
+    get('worker-start').disabled=s.ocupado||!s.datos||!s.lider||!/^\d{1,12}$/.test(get('worker-nomina').value.trim());
+  }
+  function selectLeader(id) {
+    if (s.ocupado || !s.datos) return;
+    const p=s.datos.lideres.find(x=>String(x.nomina)===String(id));
+    if (!p) return;
+    s.lider=p;
+    get('worker-search').value=p.nombre;
+    get('worker-results').hidden=true;
+    get('worker-selected').innerHTML='<strong>'+html(p.nombre)+'</strong><span>Nómina '+html(p.nomina)+' · '+html(p.puesto||'Sin puesto')+(p.area?' · '+html(p.area):'')+'</span>';
+    get('worker-selected').hidden=false;
+    msg('worker-intro-status','');
+    refreshStart();
+  }
+  function renderResults() {
+    if (!s.datos) return;
+    const term=norm(get('worker-search').value);
+    if (s.lider && norm(s.lider.nombre)!==term) { s.lider=null; get('worker-selected').hidden=true; }
+    const results=get('worker-results');
+    if (term.length<2) { results.hidden=true;results.innerHTML='';refreshStart();return; }
+    const matches=s.datos.lideres.filter(p=>norm(p.nombre).includes(term)||String(p.nomina).includes(term)).slice(0,25);
+    results.innerHTML=matches.length?matches.map(p=>'<button type="button" class="eco360-worker-result" data-worker-leader="'+html(p.nomina)+'"><strong>'+html(p.nombre)+'</strong><small>Nómina '+html(p.nomina)+' · '+html(p.puesto||'')+(p.area?' · '+html(p.area):'')+'</small></button>').join(''):'<div class="empty-people">No se encontró un líder activo con ese dato.</div>';
+    results.hidden=false;
+    refreshStart();
+  }
+  function start() {
+    if (s.ocupado || !s.datos || !s.lider) return;
+    const n=get('worker-nomina').value.trim();
+    if (!/^\d{1,12}$/.test(n)) {msg('worker-intro-status','Escribe tu número de nómina (solo dígitos).',true);return;}
+    s.nomina=n;
+    setBusy(true);msg('worker-intro-status','Comprobando participación…');
+    api('verificarParticipacionTrabajador360',{nominaTrabajador:n,nominaLider:s.lider.nomina},function(r) {
+      setBusy(false);msg('worker-intro-status','');
+      if (r && r.respondida) {msg('worker-intro-status','Ya existe una simulación en esta sesión para ese líder. Puedes usar otro número ficticio.',true);return;}
+      loadDraft();
+      const primeraPendiente=s.respuestas.findIndex(v=>v===null);
+      s.indice=primeraPendiente<0?19:Math.floor(primeraPendiente/3);
+      get('worker-intro').hidden=true;get('worker-finished').hidden=true;get('worker-questionnaire').hidden=false;
+      renderQuestion();window.scrollTo(0,0);
+    },function(err) {setBusy(false);msg('worker-intro-status',err.message,true);});
+  }
+  function updateWorkerProgress() {
+    const done=s.respuestas.filter(v=>v!==null).length;
+    get('worker-complete-count').textContent=done+' / 60 contestadas';
+    get('worker-progress-fill').style.width=(done/60*100).toFixed(2)+'%';
+    get('worker-track').setAttribute('aria-valuenow',String(done));
+    const inicio=s.indice*3;
+    const completas=s.respuestas.slice(inicio,inicio+3).every(v=>v!==null);
+    get('worker-next').disabled=s.ocupado||!completas;
+  }
+  function renderQuestion() {
+    if (!s.datos || !s.lider) return;
+    const inicio=s.indice*3;
+    const grupo=s.datos.preguntas.slice(inicio,inicio+3);
+    if (grupo.length!==3) {msg('worker-question-status','No se pudo obtener el comportamiento completo.',true);return;}
+    const q=grupo[0];
+    get('worker-number').textContent='Comportamiento '+(s.indice+1)+' de 20';
+    get('worker-leader-name').textContent=s.lider.nombre;
+    get('worker-leader-role').textContent=(s.lider.puesto||'')+(s.lider.area?' · '+s.lider.area:'');
+    get('worker-code').textContent=grupo[0].codigo+' – '+grupo[2].codigo+' · 3 conductas';
+    get('worker-competencia').textContent='Competencia: '+q.competencia;
+    get('worker-comportamiento').textContent='Comportamiento: '+q.comportamiento;
+    get('worker-scale').innerHTML=grupo.map((conducta,offset)=>{
+      const idx=inicio+offset;
+      const opciones=escala.map((titulo,i)=>{
+        const v=i+1;
+        return '<label class="eco360-worker-rating" title="'+html(titulo)+'"><input type="radio" name="worker-rating-'+idx+'" data-worker-index="'+idx+'" value="'+v+'"'+(s.respuestas[idx]===v?' checked':'')+' aria-label="'+html(titulo)+' ('+v+') para '+html(conducta.codigo)+'"><b>'+v+'</b><span>'+html(titulo)+'</span></label>';
+      }).join('');
+      return '<div class="eco360-worker-conducta" role="group" aria-label="'+html(conducta.codigo)+'"><div class="eco360-worker-conducta-label">Conducta '+(offset+1)+' de 3 · '+html(conducta.codigo)+'</div><p class="eco360-worker-question">'+html(conducta.texto)+'</p><div class="eco360-worker-scale" role="radiogroup" aria-label="Califica '+html(conducta.codigo)+'">'+opciones+'</div></div>';
+    }).join('');
+    get('worker-back').disabled=s.ocupado||s.indice===0;
+    get('worker-next').textContent=s.indice===19?'Enviar evaluación':'Guardar y continuar';
+    updateWorkerProgress();
+    msg('worker-question-status','');
+  }
+  function submit() {
+    const first=s.respuestas.findIndex(v=>v===null);
+    if (first>=0) {s.indice=Math.floor(first/3);renderQuestion();msg('worker-question-status','Completa las 60 conductas antes de enviar.',true);return;}
+    if (!window.confirm('¿Enviar las 60 respuestas de la evaluación de '+s.lider.nombre+'?')) return;
+    setBusy(true);msg('worker-question-status','Simulando el envío. No se guardará en Google Sheets.');
+    api('guardarEvaluacionTrabajador360',{nominaTrabajador:s.nomina,nominaLider:s.lider.nomina,respuestas:s.respuestas.slice()},function(r) {
+      setBusy(false);
+      if (!r || !r.ok) {msg('worker-question-status','No se recibió confirmación del guardado. Tus respuestas permanecen en esta pestaña.',true);return;}
+      clearDraft();
+      get('worker-questionnaire').hidden=true;
+      get('worker-finished').hidden=false;
+      get('worker-finished-title').textContent=r.existente?'Simulación ya realizada':'Simulación completada';
+      get('worker-finished-message').textContent=r.existente?'La simulación ya se había ejecutado en esta sesión. No se guardaron datos reales.':'Simulación completada. Las 60 respuestas no se guardaron en Google Sheets.';
+      window.scrollTo(0,0);
+    },function(err) {setBusy(false);msg('worker-question-status',err.message+' Conservamos tus respuestas en esta pestaña para reintentar.',true);renderQuestion();msg('worker-question-status',err.message+' Conservamos tus respuestas para reintentar.',true);});
+  }
+  function next() {
+    if (s.ocupado) return;
+    if (s.respuestas.slice(s.indice*3,s.indice*3+3).some(v=>v===null)) {msg('worker-question-status','Califica las tres conductas antes de continuar.',true);return;}
+    saveDraft();
+    if (s.indice===19) submit();
+    else {s.indice++;renderQuestion();window.scrollTo(0,0);}
+  }
+  function backToSelection(reset) {
+    if (s.ocupado) return;
+    get('worker-questionnaire').hidden=true;get('worker-finished').hidden=true;get('worker-intro').hidden=false;
+    if (reset) {get('worker-nomina').value='';get('worker-search').value='';get('worker-selected').hidden=true;s.lider=null;s.nomina='';s.respuestas=Array(60).fill(null);}
+    refreshStart();msg('worker-intro-status','');window.scrollTo(0,0);
+  }
+  get('worker-nomina').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,12);msg('worker-intro-status','');refreshStart();});
+  get('worker-search').addEventListener('input',renderResults);
+  get('worker-results').addEventListener('click',function(e){const b=e.target.closest('button[data-worker-leader]');if(b)selectLeader(b.dataset.workerLeader);});
+  get('worker-search').addEventListener('keydown',function(e){if(e.key==='Enter'){const b=get('worker-results').querySelector('button[data-worker-leader]');if(b){e.preventDefault();b.click();}}});
+  get('worker-start').addEventListener('click',start);
+  get('worker-scale').addEventListener('change',function(e){
+    if(s.ocupado||!e.target.matches('input[data-worker-index]'))return;
+    const n=Number(e.target.value),idx=Number(e.target.dataset.workerIndex);
+    if(!Number.isInteger(n)||n<1||n>5||!Number.isInteger(idx)||idx<s.indice*3||idx>=s.indice*3+3)return;
+    s.respuestas[idx]=n;saveDraft();updateWorkerProgress();msg('worker-question-status','');
+  });
+  get('worker-back').addEventListener('click',function(){if(s.ocupado||s.indice===0)return;s.indice--;renderQuestion();window.scrollTo(0,0);});
+  get('worker-next').addEventListener('click',next);
+  get('worker-new').addEventListener('click',()=>backToSelection(true));
+  msg('worker-intro-status','Cargando líderes y preguntas ficticios…');
+  api('obtenerFormularioTrabajadores360',undefined,function(data) {
+    if (!data||!Array.isArray(data.lideres)||!Array.isArray(data.preguntas)||data.preguntas.length!==60||
+        data.preguntas.some((q,i)=>i%3!==0&&String(q.numeroComportamiento)!==String(data.preguntas[i-(i%3)].numeroComportamiento))) {
+      msg('worker-intro-status','El catálogo o los 20 grupos de tres conductas no se recibieron correctamente.',true);return;
+    }
+    CICLO_APP=String(data.cicloId);s.datos=data;msg('worker-intro-status','');refreshStart();
+  },function(err){msg('worker-intro-status','No se pudo cargar la evaluación: '+err.message,true);});
+})();
+</script></body></html>

@@ -223,8 +223,11 @@ body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antiali
   }
   function start() {
     if (s.ocupado || !s.datos || !s.lider) return;
-    const n=get('worker-nomina').value.trim();
-    if (!/^\d{1,12}$/.test(n)) {msg('worker-intro-status','Escribe tu número de nómina (solo dígitos).',true);return;}
+    const escrita=get('worker-nomina').value.trim();
+    if (!/^\d{1,12}$/.test(escrita)) {msg('worker-intro-status','Escribe tu número de nómina (solo dígitos).',true);return;}
+    // 001, 01 y 1 corresponden a la misma nómina, también si el Sheet registra 1.
+    const n=escrita.replace(/^0+(?=\d)/,'');
+    get('worker-nomina').value=n;
     s.nomina=n;
     setBusy(true);msg('worker-intro-status','Comprobando participación…');
     api('verificarParticipacionTrabajador360',{nominaTrabajador:n,nominaLider:s.lider.nomina,cicloId:s.datos.cicloId},function(r) {

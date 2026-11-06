@@ -178,6 +178,96 @@ body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antiali
   body:has(#worker-questionnaire:not([hidden])) .eco360-worker-conducta {padding-top:3px;padding-bottom:4px}
   body:has(#worker-questionnaire:not([hidden])) .eco360-worker-taxonomy {padding-top:5px;padding-bottom:5px}
 }
+/* ECO360 2026-11-06: jerarquía visual móvil en el cuestionario.
+   Líder discreto / competencia protagonista / opciones legibles; no altera funciones. */
+@media (max-width:700px) {
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-person {
+    background:#f3f5f8;
+    border:1px solid #dce2e9;
+    color:#5b6e81;
+    padding:5px 9px 6px;
+    margin-bottom:6px;
+    border-radius:7px;
+    font-size:10.5px;
+    line-height:1.18;
+  }
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-person::before {
+    content:"LÍDER EVALUADO";
+    display:block;
+    color:#68798a;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.65px;
+    line-height:1.15;
+    margin-bottom:2px;
+  }
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-person b {
+    color:#1c3856;
+    font-size:13px;
+    line-height:1.15;
+    font-weight:800;
+    margin-bottom:2px;
+  }
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-taxonomy {
+    background:#102f52;
+    border:1px solid #24476d;
+    border-left:4px solid #b52441;
+    box-shadow:none;
+    color:#fff;
+    border-radius:9px;
+    padding:7px 10px 8px;
+    margin-bottom:7px;
+  }
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-taxonomy small {
+    color:#ffbdca;
+    font-size:10px;
+    letter-spacing:.2px;
+    margin-bottom:4px;
+    line-height:1.12;
+  }
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-taxonomy strong {
+    color:#fff;
+    font-size:16px;
+    font-weight:850;
+    line-height:1.15;
+    letter-spacing:-.1px;
+    margin-bottom:5px;
+  }
+  body:has(#worker-questionnaire:not([hidden])) #worker-comportamiento.eco360-worker-hint {
+    display:block;
+    color:#eaf1fb;
+    border-top:1px solid rgba(255,255,255,.25);
+    padding-top:5px;
+    margin:0;
+    font-size:13px;
+    font-weight:650;
+    line-height:1.22;
+  }
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-rating span {
+    max-width:100%;
+    width:100%;
+    min-width:0;
+    font-size:9px;
+    line-height:1.08;
+    text-align:center;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:normal;
+    hyphens:auto;
+  }
+}
+@media (max-width:700px) and (max-height:710px) {
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-person {
+    padding-top:3px;
+    padding-bottom:4px;
+    margin-bottom:4px;
+  }
+  body:has(#worker-questionnaire:not([hidden])) .eco360-worker-taxonomy {
+    padding-top:5px;
+    padding-bottom:6px;
+    margin-bottom:5px;
+  }
+}
 </style></head><body><div class="screen"><header class="topbar"><img class="corporate" src="../assets/eco-cocacola-oficial.png" alt="Logotipo oficial de Embotelladora de Colima, Coca-Cola y Cervecería de la Costa" width="520" height="130"><h1 class="title">Evaluación 360 ECO</h1></header><main>  <!-- Acceso independiente para trabajadores: enlace ?page=trabajadores. -->
   <section id="view-trabajadores" class="eco360-worker-view main-view">
     <div id="worker-intro" class="eco360-worker-card">

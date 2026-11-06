@@ -1,10 +1,13 @@
-<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#173b59"><meta name="apple-mobile-web-app-title" content="Evaluación ECO"><link rel="apple-touch-icon" href="../assets/apple-touch-icon.png"><link rel="manifest" href="./manifest.webmanifest"><title>Evaluación de Líderes ECO — Móvil</title><style>*{box-sizing:border-box}html{min-height:100%;-webkit-text-size-adjust:100%}
-body{min-height:100vh;min-height:100dvh;margin:0;background:#f2f5f8;color:#183146;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-.brand{background:#fff;border-bottom:1px solid #dce5ee;padding:calc(13px + env(safe-area-inset-top)) 14px 12px;text-align:center}
-.brand img{max-width:100%;max-height:72px;width:auto;height:auto;object-fit:contain;display:block;margin:0 auto 8px}
-.header-title{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px}
-h1{font-size:18px;margin:0;color:#113451}
-.tag{font-size:9px;font-weight:800;background:#fff1db;color:#815313;border:1px solid #f1d298;border-radius:999px;padding:4px 7px}
+<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#173b59"><meta name="apple-mobile-web-app-title" content="Evaluación ECO"><link rel="apple-touch-icon" href="../assets/apple-touch-icon.png"><link rel="manifest" href="./manifest.webmanifest"><title>Evaluación de Líderes ECO — Móvil</title><style>:root{color-scheme:light;--navy:#0b2848;--red:#980b25;--ink:#16263a;--muted:#687686;--stroke:#d5dce5}
+*{box-sizing:border-box}
+html{font-family:Arial,Helvetica,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antialiased}
+.screen{max-width:1240px;margin:0 auto;min-height:100vh;min-height:100dvh;background:#fff;box-shadow:0 0 25px #0b284810;padding-bottom:env(safe-area-inset-bottom)}
+.topbar{min-height:90px;background:linear-gradient(112deg,#081c32 0%,#102f52 50%,#0e2845 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(22px,5.4vw,75px);gap:30px}
+.corporate{display:block;width:clamp(350px,40vw,448px);max-width:60%;height:auto;object-fit:contain}
+.title{font-size:clamp(24px,2.75vw,36px);line-height:1.12;font-weight:800;white-space:nowrap;letter-spacing:-.65px;margin:0}
+@media(max-width:1090px){.topbar{min-height:80px;padding:13px 25px}.corporate{width:370px}.title{font-size:27px}}
+@media(max-width:700px){.topbar{padding:calc(17px + env(safe-area-inset-top)) 15px 17px;min-height:unset;flex-direction:column;gap:7px;text-align:center}.corporate{max-width:100%;width:355px}.title{font-size:24px;white-space:normal}}
 .main-view[hidden],.eco360-worker-card[hidden],#worker-selected[hidden],#worker-results[hidden]{display:none!important}
 .footer{font-size:11px;color:#708298;padding:0 16px 20px;text-align:center}
 /* Portal independiente para trabajadores, optimizado para pantalla móvil. */
@@ -75,7 +78,7 @@ h1{font-size:18px;margin:0;color:#113451}
 @media(max-width:420px){.eco360-worker-conducta{padding:10px 0 13px}.eco360-worker-conducta .eco360-worker-question{font-size:14px}.eco360-worker-conducta .eco360-worker-rating{min-height:58px}}
 
 
-</style></head><body><header class="brand"><img src="../assets/eco-cocacola-oficial.png" alt="Logotipos oficiales de Embotelladora de Colima" width="520" height="130"><div class="header-title"><h1>Evaluación de Líderes ECO</h1><span class="tag">MÓVIL · PROTOTIPO</span></div></header><main>  <!-- Acceso independiente para trabajadores: enlace ?page=trabajadores. -->
+</style></head><body><div class="screen"><header class="topbar"><img class="corporate" src="../assets/eco-cocacola-oficial.png" alt="Logotipo oficial de Embotelladora de Colima, Coca-Cola y Cervecería de la Costa" width="520" height="130"><h1 class="title">Evaluación 360 ECO</h1></header><main>  <!-- Acceso independiente para trabajadores: enlace ?page=trabajadores. -->
   <section id="view-trabajadores" class="eco360-worker-view main-view">
     <div id="worker-intro" class="eco360-worker-card">
       <h2>Selecciona al líder</h2>
@@ -114,7 +117,7 @@ h1{font-size:18px;margin:0;color:#113451}
     </div>
   </section>
 
-</main><p class="footer">Prototipo de Evaluación 360 ECO · Acceso móvil para trabajadores</p><script>const ecoPuente=(()=>{
+</main><p class="footer">Evaluación 360 ECO · Acceso para trabajadores</p></div><script>const ecoPuente=(()=>{
   "use strict";
   /* Servicio de datos del módulo Trabajadores de Evaluación 360 ECO. */
   const API_URL='https://script.google.com/macros/s/AKfycbyYfau3oEdwrb4eoPjep-LbJijamSxF78QTVdj9jiNhP0DeMRJWCwb5zkKhMhMz8H7I/exec';

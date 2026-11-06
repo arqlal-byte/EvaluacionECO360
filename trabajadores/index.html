@@ -113,7 +113,6 @@ body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antiali
     </div>
     <div id="worker-finished" class="eco360-worker-card" hidden>
       <div class="eco360-worker-done"><div class="check" aria-hidden="true">✓</div><h2 id="worker-finished-title">Evaluación registrada</h2><p id="worker-finished-message"></p></div>
-      <button type="button" id="worker-new" class="eco360-worker-button primary-wide">Realizar otra evaluación</button>
     </div>
   </section>
 
@@ -230,7 +229,7 @@ body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antiali
     setBusy(true);msg('worker-intro-status','Comprobando participación…');
     api('verificarParticipacionTrabajador360',{nominaTrabajador:n,nominaLider:s.lider.nomina,cicloId:s.datos.cicloId},function(r) {
       setBusy(false);msg('worker-intro-status','');
-      if (r && r.respondida) {msg('worker-intro-status','Ya existe una evaluación registrada con esta nómina para el líder seleccionado en el ciclo vigente.',true);return;}
+      if (r && r.respondida) {msg('worker-intro-status','Ya realizaste una evaluación en este ciclo. Solo se permite evaluar a un líder.',true);return;}
       loadDraft();
       const primeraPendiente=s.respuestas.findIndex(v=>v===null);
       s.indice=primeraPendiente<0?19:Math.floor(primeraPendiente/3);
@@ -276,17 +275,19 @@ body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antiali
     const first=s.respuestas.findIndex(v=>v===null);
     if (first>=0) {s.indice=Math.floor(first/3);renderQuestion();msg('worker-question-status','Completa las 60 conductas antes de enviar.',true);return;}
     if (!window.confirm('¿Enviar las 60 respuestas de la evaluación de '+s.lider.nombre+'?')) return;
-    setBusy(true);msg('worker-question-status','Guardando la evaluación. No cierres esta pantalla.');
+    setBusy(true);msg('worker-question-status','Guardando y verificando tu evaluación. No cierres esta pantalla.');
+    const avisoDemora=setTimeout(()=>{if(s.ocupado)msg('worker-question-status','Seguimos verificando el registro. La operación puede tardar; no cierres esta pantalla.');},12000);
     api('guardarEvaluacionTrabajador360',{nominaTrabajador:s.nomina,nominaLider:s.lider.nomina,respuestas:s.respuestas.slice(),cicloId:s.datos.cicloId},function(r) {
+      clearTimeout(avisoDemora);
       setBusy(false);
       if (!r || !r.ok) {msg('worker-question-status','No se recibió confirmación del guardado. Tus respuestas permanecen en esta pestaña.',true);return;}
       clearDraft();
       get('worker-questionnaire').hidden=true;
       get('worker-finished').hidden=false;
       get('worker-finished-title').textContent=r.existente?'Evaluación ya registrada':'Evaluación enviada';
-      get('worker-finished-message').textContent=r.existente?'Ya existía una evaluación registrada para este líder con tu nómina. No se duplicó.':'Tus 60 respuestas quedaron registradas. Gracias por participar.';
+      get('worker-finished-message').textContent=r.existente?'Tu evaluación ya estaba registrada y no se duplicó. Puedes cerrar esta página.':'Tus 60 respuestas quedaron registradas correctamente. Gracias por participar. Puedes cerrar esta página.';
       window.scrollTo(0,0);
-    },function(err) {setBusy(false);msg('worker-question-status',err.message+' Conservamos tus respuestas en esta pestaña para reintentar.',true);renderQuestion();msg('worker-question-status',err.message+' Conservamos tus respuestas para reintentar.',true);});
+    },function(err) {clearTimeout(avisoDemora);setBusy(false);renderQuestion();msg('worker-question-status',err.message+' Conservamos tus respuestas para reintentar.',true);});
   }
   function next() {
     if (s.ocupado) return;
@@ -294,12 +295,6 @@ body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antiali
     saveDraft();
     if (s.indice===19) submit();
     else {s.indice++;renderQuestion();window.scrollTo(0,0);}
-  }
-  function backToSelection(reset) {
-    if (s.ocupado) return;
-    get('worker-questionnaire').hidden=true;get('worker-finished').hidden=true;get('worker-intro').hidden=false;
-    if (reset) {get('worker-nomina').value='';get('worker-search').value='';get('worker-selected').hidden=true;s.lider=null;s.nomina='';s.respuestas=Array(60).fill(null);}
-    refreshStart();msg('worker-intro-status','');window.scrollTo(0,0);
   }
   get('worker-nomina').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,12);msg('worker-intro-status','');refreshStart();});
   get('worker-search').addEventListener('input',renderResults);
@@ -314,7 +309,6 @@ body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antiali
   });
   get('worker-back').addEventListener('click',function(){if(s.ocupado||s.indice===0)return;s.indice--;renderQuestion();window.scrollTo(0,0);});
   get('worker-next').addEventListener('click',next);
-  get('worker-new').addEventListener('click',()=>backToSelection(true));
   msg('worker-intro-status','Cargando catálogo de líderes y cuestionario oficial…');
   api('obtenerFormularioTrabajadores360',undefined,function(data) {
     if (!data||!Array.isArray(data.lideres)||!Array.isArray(data.preguntas)||data.preguntas.length!==60||

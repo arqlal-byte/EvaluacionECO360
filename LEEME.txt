@@ -1,7 +1,24 @@
-PERSONA ECO — ACCESO DIRECTO
+EVALUACIÓN DE LÍDERES ECO — PUERTA DE ENTRADA MÓVIL
 
-Esta PWA funciona únicamente como acceso directo a la Web App de Persona ECO en Google Apps Script.
-Al abrirla, redirige automáticamente a Persona ECO.
-El icono instalado será Persona ECO (rojo).
+Sitio estático de GitHub Pages, exclusivo para colaboradores que evalúan a sus líderes.
+La portada contiene un único enlace al formulario de trabajadores de Google Apps Script:
+https://script.google.com/macros/s/AKfycbyYfau3oEdwrb4eoPjep-LbJijamSxF78QTVdj9jiNhP0DeMRJWCwb5zkKhMhMz8H7I/exec?page=trabajadores
 
-Puede usarse en el repositorio actual de Persona ECO si se desea conservar su URL de GitHub Pages como acceso instalado.
+El portal NO almacena nóminas, respuestas ni datos personales. Las respuestas se
+procesan únicamente en Apps Script y los Google Sheets del ciclo vigente.
+
+Archivos de portada: index.html, manifest.webmanifest, manifest.json, sw.js.
+Logotipos e íconos: assets/ (conservar imágenes corporativas oficiales existentes).
+
+AVISO DE SEGURIDAD:
+El sistema Apps Script actualmente no autentica a los participantes; ingresar
+nómina no prueba identidad. No difundir masivamente hasta que RH/Sistemas
+valide controles, permisos y condiciones del despliegue.
+
+Antes de darlo por validado, probar desde un iPhone y un Android que el botón
+abre la versión vigente de ?page=trabajadores y permite guardar con datos
+autorizados de prueba. El enlace al despliegue se heredó de la página anterior
+existente en este repositorio; verificarlo con la versión actual de Apps Script.
+
+Respaldo anterior a la portada: rama
+respaldo-antes-portada-trabajadores-2026-11-06

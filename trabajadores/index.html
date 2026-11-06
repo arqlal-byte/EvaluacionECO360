@@ -79,7 +79,7 @@ h1{font-size:18px;margin:0;color:#113451}
   <section id="view-trabajadores" class="eco360-worker-view main-view">
     <div id="worker-intro" class="eco360-worker-card">
       <h2>Selecciona al líder</h2>
-      <p class="eco360-worker-lead">Prueba la experiencia móvil con líderes y preguntas ficticias. No se registran evaluaciones reales.</p>
+      <p class="eco360-worker-lead">Selecciona al líder que deseas evaluar y responde las 60 conductas del cuestionario oficial.</p>
       <div class="eco360-worker-field">
         <label for="worker-nomina">Tu número de nómina</label>
         <input id="worker-nomina" class="eco360-worker-input" type="text" inputmode="numeric" pattern="[0-9]{1,12}" maxlength="12" autocomplete="off" placeholder="Escribe tu nómina">
@@ -116,7 +116,7 @@ h1{font-size:18px;margin:0;color:#113451}
 
 </main><p class="footer">Prototipo de Evaluación 360 ECO · Acceso móvil para trabajadores</p><script>const ecoPuente=(()=>{
   "use strict";
-  /* Solo URL /exec de un proyecto Apps Script de PRUEBAS, independiente. */
+  /* Servicio de datos del módulo Trabajadores de Evaluación 360 ECO. */
   const API_URL='https://script.google.com/macros/s/AKfycbyYfau3oEdwrb4eoPjep-LbJijamSxF78QTVdj9jiNhP0DeMRJWCwb5zkKhMhMz8H7I/exec';
   const remoto=/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(API_URL);
   let counter=0;
@@ -225,9 +225,9 @@ h1{font-size:18px;margin:0;color:#113451}
     if (!/^\d{1,12}$/.test(n)) {msg('worker-intro-status','Escribe tu número de nómina (solo dígitos).',true);return;}
     s.nomina=n;
     setBusy(true);msg('worker-intro-status','Comprobando participación…');
-    api('verificarParticipacionTrabajador360',{nominaTrabajador:n,nominaLider:s.lider.nomina},function(r) {
+    api('verificarParticipacionTrabajador360',{nominaTrabajador:n,nominaLider:s.lider.nomina,cicloId:s.datos.cicloId},function(r) {
       setBusy(false);msg('worker-intro-status','');
-      if (r && r.respondida) {msg('worker-intro-status','Ya existe una simulación en esta sesión para ese líder. Puedes usar otro número ficticio.',true);return;}
+      if (r && r.respondida) {msg('worker-intro-status','Ya existe una evaluación registrada con esta nómina para el líder seleccionado en el ciclo vigente.',true);return;}
       loadDraft();
       const primeraPendiente=s.respuestas.findIndex(v=>v===null);
       s.indice=primeraPendiente<0?19:Math.floor(primeraPendiente/3);
@@ -273,15 +273,15 @@ h1{font-size:18px;margin:0;color:#113451}
     const first=s.respuestas.findIndex(v=>v===null);
     if (first>=0) {s.indice=Math.floor(first/3);renderQuestion();msg('worker-question-status','Completa las 60 conductas antes de enviar.',true);return;}
     if (!window.confirm('¿Enviar las 60 respuestas de la evaluación de '+s.lider.nombre+'?')) return;
-    setBusy(true);msg('worker-question-status','Simulando el envío. No se guardará en Google Sheets.');
-    api('guardarEvaluacionTrabajador360',{nominaTrabajador:s.nomina,nominaLider:s.lider.nomina,respuestas:s.respuestas.slice()},function(r) {
+    setBusy(true);msg('worker-question-status','Guardando la evaluación. No cierres esta pantalla.');
+    api('guardarEvaluacionTrabajador360',{nominaTrabajador:s.nomina,nominaLider:s.lider.nomina,respuestas:s.respuestas.slice(),cicloId:s.datos.cicloId},function(r) {
       setBusy(false);
       if (!r || !r.ok) {msg('worker-question-status','No se recibió confirmación del guardado. Tus respuestas permanecen en esta pestaña.',true);return;}
       clearDraft();
       get('worker-questionnaire').hidden=true;
       get('worker-finished').hidden=false;
-      get('worker-finished-title').textContent=r.existente?'Simulación ya realizada':'Simulación completada';
-      get('worker-finished-message').textContent=r.existente?'La simulación ya se había ejecutado en esta sesión. No se guardaron datos reales.':'Simulación completada. Las 60 respuestas no se guardaron en Google Sheets.';
+      get('worker-finished-title').textContent=r.existente?'Evaluación ya registrada':'Evaluación enviada';
+      get('worker-finished-message').textContent=r.existente?'Ya existía una evaluación registrada para este líder con tu nómina. No se duplicó.':'Tus 60 respuestas quedaron registradas. Gracias por participar.';
       window.scrollTo(0,0);
     },function(err) {setBusy(false);msg('worker-question-status',err.message+' Conservamos tus respuestas en esta pestaña para reintentar.',true);renderQuestion();msg('worker-question-status',err.message+' Conservamos tus respuestas para reintentar.',true);});
   }
@@ -312,7 +312,7 @@ h1{font-size:18px;margin:0;color:#113451}
   get('worker-back').addEventListener('click',function(){if(s.ocupado||s.indice===0)return;s.indice--;renderQuestion();window.scrollTo(0,0);});
   get('worker-next').addEventListener('click',next);
   get('worker-new').addEventListener('click',()=>backToSelection(true));
-  msg('worker-intro-status','Cargando líderes y preguntas ficticios…');
+  msg('worker-intro-status','Cargando catálogo de líderes y cuestionario oficial…');
   api('obtenerFormularioTrabajadores360',undefined,function(data) {
     if (!data||!Array.isArray(data.lideres)||!Array.isArray(data.preguntas)||data.preguntas.length!==60||
         data.preguntas.some((q,i)=>i%3!==0&&String(q.numeroComportamiento)!==String(data.preguntas[i-(i%3)].numeroComportamiento))) {

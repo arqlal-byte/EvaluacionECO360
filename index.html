@@ -229,7 +229,8 @@ body{margin:0;background:#f5f7fa;color:var(--ink);-webkit-font-smoothing:antiali
     setBusy(true);msg('worker-intro-status','Comprobando participación…');
     api('verificarParticipacionTrabajador360',{nominaTrabajador:n,nominaLider:s.lider.nomina,cicloId:s.datos.cicloId},function(r) {
       setBusy(false);msg('worker-intro-status','');
-      if (r && r.respondida) {msg('worker-intro-status','Ya realizaste una evaluación en este ciclo. Solo se permite evaluar a un líder.',true);return;}
+      if (!r || r.verificacion !== 'ECO360_BLOQUEO_20261106' || typeof r.respondida !== 'boolean') {msg('worker-intro-status','No se pudo confirmar tu participación. Actualiza el servicio de Evaluación 360 para continuar.',true);return;}
+      if (r.respondida) {msg('worker-intro-status','Ya realizaste la evaluación de un líder en este ciclo. Tu evaluación está concluida y no puede repetirse.',true);return;}
       loadDraft();
       const primeraPendiente=s.respuestas.findIndex(v=>v===null);
       s.indice=primeraPendiente<0?19:Math.floor(primeraPendiente/3);

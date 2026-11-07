@@ -1,0 +1,27 @@
+Monitor ECO — PROTOTIPO VISUAL V1
+Fecha: 2026-11-06
+
+Ruta de vista previa:
+https://arqlal-byte.github.io/EvaluacionECO360/monitor-eco/
+
+ALCANCE
+- Tablero visual independiente publicado en una ruta secundaria, sin modificar la raíz de Evaluación 360 ECO.
+- Seis aplicaciones representadas: Dashboard Ejecutivo, Autoevaluación, Evaluación 360, Centro de Administración, Mi Persona y Familia ECO.
+- Gráficas, tarjetas, animaciones, controles para cambiar periodo y simulación de incidencia.
+- Imagen corporativa: se referencia el recurso oficial existente publicado en la ruta /assets/eco-cocacola-oficial.png del repositorio EvaluacionECO360. No se generó ni redibujó un logotipo.
+
+LIMITACIONES
+- No contiene información operativa real.
+- Todos los estados, tiempos, porcentajes y eventos son EXCLUSIVAMENTE DE DEMOSTRACIÓN.
+- No cuenta todavía con autenticación, backend de monitoreo, IA conectada, notificaciones ni integraciones con Apps Script, Sheets o Drive.
+- No se modificaron las seis aplicaciones, sus proyectos Apps Script, sus bases ni el contenido de sus hojas.
+
+ARQUITECTURA OBJETIVO
+GitHub Pages (vista) -> API de solo lectura autenticada -> servicio monitor independiente -> bitácora de fuentes y eventos -> análisis IA autorizado.
+
+PENDIENTE
+1. Validación visual y funcional por el usuario.
+2. Decidir repositorio/ruta definitiva y control de acceso.
+3. Revisar código vigente y dependencias de las seis aplicaciones.
+4. Conectar datos reales gradualmente y configurar monitor automático externo/Apps Script.
+5. Registrar métricas, alertas, límites, bitácoras y recuperación.
